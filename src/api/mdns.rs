@@ -17,12 +17,12 @@ pub async fn discover_devices(
 async fn discover_devices_impl(
     cb: Arc<dyn Fn(Vec<ScanResult>) -> DartFnFuture<()> + Send + Sync>,
 ) -> SbResult<()> {
-    let scanner = ServiceScanner::new();
+    let mut scanner = ServiceScanner::new();
     scanner
         .mdns_scan(|res| {
             let cb = cb.clone();
             async move {
-                cb(res.iter().map(|(k, v)| v.clone().into()).collect()).await;
+                cb(res.iter().map(|(_, v)| v.clone().into()).collect()).await;
                 Ok(())
             }
         })

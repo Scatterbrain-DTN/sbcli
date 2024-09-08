@@ -89,7 +89,7 @@ impl App {
     }
 
     async fn scan(&self) -> Result<()> {
-        let scanner = ServiceScanner::new();
+        let mut scanner = ServiceScanner::new();
         scanner
             .mdns_scan(|r| async move {
                 for (name, record) in r.iter() {

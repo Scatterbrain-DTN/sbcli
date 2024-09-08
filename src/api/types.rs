@@ -1,5 +1,4 @@
 use flutter_rust_bridge::frb;
-use scatterbrain::mdns::HostRecord;
 pub use std::collections::BTreeMap;
 pub use std::net::IpAddr;
 
@@ -9,9 +8,6 @@ pub struct ScanResult {
     pub addrs: Vec<IpAddr>,
     pub port: u16,
 }
-
-#[frb(mirror(ServiceScanner))]
-pub struct _ServiceScanner(tokio::sync::RwLock<BTreeMap<String, HostRecord>>);
 
 #[frb(mirror(Ipv4Addr))]
 pub struct Ipv4Address {
