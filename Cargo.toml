@@ -1,0 +1,37 @@
+[package]
+name = "sbcli"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "staticlib", "lib"]
+
+[[bin]]
+name = "sbcli"
+edition = "2021"
+
+[dependencies]
+figment = { version = "0.10.19", features = ["json", "serde_json", "toml"] }
+scatterbrain = { path = "./scatterbrain", features = [ "flutter" ] }
+tokio = { version = "1.38.0", features = [
+    "fs",
+    "io-std",
+    "io-util",
+    "macros",
+    "net",
+    "rt-multi-thread",
+    "signal",
+    "time",
+    "sync",
+] }
+env_logger = "0.11.3"
+clap = { version = "4.5.9", features = ["derive"] }
+log = "0.4.22"
+toml = "0.8.15"
+dirs = "5.0.1"
+serde = "1.0.204"
+serde_json = "1.0.120"
+thiserror = "1.0.63"
+uuid = "1.10.0"
+chrono = "0.4.38"
+flutter_rust_bridge = "=2.3.0"
