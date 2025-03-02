@@ -12,7 +12,7 @@ edition = "2021"
 
 [dependencies]
 figment = { version = "0.10.19", features = ["json", "serde_json", "toml"] }
-scatterbrain = { path = "./scatterbrain-rs", features = [ "flutter" ] }
+scatterbrain = { path = "./scatterbrain-rs" }
 tokio = { version = "1.38.0", features = [
     "fs",
     "io-std",
@@ -34,4 +34,3 @@ serde_json = "1.0.120"
 thiserror = "1.0.63"
 uuid = "1.10.0"
 chrono = "0.4.38"
-flutter_rust_bridge = "=2.3.0"

@@ -1,3 +1,4 @@
+use scatterbrain::connection::SessionTrait;
 use std::{
     borrow::Cow,
     net::SocketAddr,
@@ -11,7 +12,8 @@ use clap::{Parser, Subcommand};
 use config::Config;
 use error::Error;
 use scatterbrain::{
-    crypto::{B64SessionState, SessionState},
+    api::types::CryptoConfig,
+    crypto::SessionState,
     mdns::{HostRecord, ServiceScanner},
     response::{Message, PrettyPrint},
 };
@@ -72,7 +74,7 @@ struct Args {
 
 struct App {
     args: Args,
-    session: Config<SessionState, B64SessionState>,
+    session: Config<SessionState, CryptoConfig>,
 }
 
 impl App {
@@ -132,13 +134,9 @@ impl App {
                         from,
                         to,
                     } => {
-                        let m = if let (Some(from), Some(to)) = (from, to) {
-                            stream
-                                .get_messages_recieve_date(application, limit, from, to)
-                                .await?
-                        } else {
-                            stream.get_messages(application, limit).await?
-                        };
+                        let m = stream
+                            .get_messages_recieve_date(application, limit, from, to)
+                            .await?;
                         println!("{}", m.print_output()?);
                     }
                     ConnectCommand::SendMessage { application, text } => {
@@ -172,6 +170,7 @@ impl App {
                 let host: HostRecord = host.into();
                 println!("starting pairing with {}", host.name);
                 let stream = host.connect().await?;
+
                 let session = stream
                     .pair(
                         self.session.config,
